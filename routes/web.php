@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\UserController; // UserControllerを使うために追記
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +30,19 @@ Route::middleware('auth')->group(function () {
     Route::put('/admin/posts/{id}/update', [PostController::class, 'update'])->name('admin.posts.update');
     // 削除処理の実行 (DELETEリクエスト)
     Route::delete('/admin/posts/{id}/delete', [PostController::class, 'destroy'])->name('admin.posts.delete');
+});
+    //ログインユーザのみアクセス可能
+Route::middleware('auth')->group(function () {
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+    //　/tasks/create というURLにアクセスすると,TaskController の create() メソッドが呼ばれ,ルート名は 'tasks.create' になるよ
+    Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+     //　/tasks/1とか2とか というURLにアクセスすると,TaskController の show() メソッドが呼ばれ,ルート名は 'tasks.show' になるよ
+    Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
+
+    Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
 
 require __DIR__.'/auth.php';
