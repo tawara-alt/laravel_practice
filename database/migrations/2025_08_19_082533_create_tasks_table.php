@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id(); //自動連番で作ってね
-            $table->string('title'); 
-            $table->text('content'); 
-            $table->dateTime('deadline_at'); 
-            $table->dateTime('support_at')->nullable(); 
-            $table->integer('priority'); 
-            $table->integer('status'); 
+            $table->string('title',100); //タスクのタイトル
+            $table->text('content'); //タスクの詳細内容
+            $table->dateTime('deadline_at'); //タスクの締め切り日時
+            $table->dateTime('support_at')->nullable(); // サポートがない場合は空の値を保存。未入力でもいいよ。
+            $table->unsignedTinyInteger('priority'); //数字が入る
+            $table->unsignedTinyInteger('status'); //数字が入る
             $table->timestamps(); //created_atとupdated_atのカラム
-            $table->softDeletes(); 
+            $table->softDeletes(); //論理削除
 
         });
     }
