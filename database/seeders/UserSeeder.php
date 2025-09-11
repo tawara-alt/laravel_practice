@@ -17,6 +17,8 @@ class UserSeeder extends Seeder
            // ここにユーザーを作成する処理を書きます
 
         // デフォルト認証（メールアドレス）でログインできるユーザーを作成
+        if (!User::where('email', 'test@example.com')->exists()) {
+
         User::create(
 		        [
 		            'name' => 'テストユーザー',
@@ -24,11 +26,31 @@ class UserSeeder extends Seeder
 		            'password' => Hash::make('password'), // パスワードをハッシュ化して保存
 		            // 他に必要なデフォルトカラムがあればここに追加 (例: email_verified_at など)
 		        ],
-		        // ...
+		        
+        );}
+        User::create(
+                [
+                    'name' => '担当者A',
+                    'email' => 'tanto_a@example.com',
+                    'password' => Hash::make('password123'),
+                ]
         );
 
-        // 複数のユーザーを作成したい場合は、createメソッドを複数回呼び出したり、ループを使ったりします。
-        // User::create([...]);
-        // User::factory()->count(10)->create(); // ファクトリを使えばダミーデータを複数簡単に作れます
+        User::create(
+                [
+                    'name' => '担当者B',
+                    'email' => 'tanto_b@example.com',
+                    'password' => Hash::make('password123'),
+                ]
+        );
+
+        User::create(
+                [
+                    'name' => '担当者C',
+                    'email' => 'tanto_c@example.com',
+                    'password' => Hash::make('password123'),
+                ]
+        );
+
     }
 }

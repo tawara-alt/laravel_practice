@@ -17,7 +17,13 @@ class Task extends Model
         'support_at',
         'priority',
         'status',
+        'user_id',
     ];
+    //taksテーブルのuser_idカラムがusersテーブルのidを参照していることを前提に、Eloquentが自動的に関連するユーザー情報を取得。
+    public function user()
+    {
+        return $this->belongsTo(User::class); 
+    }
 
     //日時として扱いたいカラムを指定。Carbonインスタンスに変換。
     protected $dates = ['deleted_at', 'deadline_at', 'support_at'];

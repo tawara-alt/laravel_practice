@@ -37,7 +37,6 @@
                             <input type="text" name="title" id="title" value="{{ old('title', $task->title ?? '') }}"
                                 
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                
                         </div>
 
                         {{-- 内容 --}}
@@ -46,8 +45,24 @@
                             <textarea name="content" id="content" rows="6"
                                 
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('content', $task->content ?? '') }}</textarea>
-                                
                         </div>
+
+{{-- 担当者 --}} <!-- タスクに対して、「誰が担当か」を明確に設定 -->
+<div class="mb-4">
+    <label for="user_id" class="block text-gray-700 text-sm font-bold mb-2">担当者：</label>
+    <select name="user_id" id="user_id"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <option value="">-- 担当者を選択 --</option>
+        @foreach ($users as $user)
+            <option value="{{ $user->id }}"{{ old('user_id', $task->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('user_id')
+        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+    @enderror
+</div>
 
                         {{-- 対応期限 --}}
                         <div class="mb-4">
@@ -80,6 +95,8 @@
                                 @endforeach
                             </select>
                         </div>
+                        
+                        
 
                         {{-- ステータス --}}
                         <div class="mb-4">

@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyPageController;
-use App\Http\Controllers\UserController; // UserControllerを使うために追記
+//use App\Http\Controllers\UserController; // UserControllerを使うために追記
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
 
@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
 });
     //ログインユーザのみアクセス可能
 Route::middleware('auth')->group(function () {
+
+    Route::get('/tasks/download', [TaskController::class, 'downloadCsv'])->name('tasks.downloadCsv');
+
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     //　/tasks/create というURLにアクセスすると,TaskController の create() メソッドが呼ばれ,ルート名は 'tasks.create' になるよ
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
@@ -43,6 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+    
+
 });
 
 require __DIR__.'/auth.php';
@@ -63,13 +69,13 @@ Route::get('/my-page', [MyPageController::class, 'index'])->name('my.page');
 
 // パラメータを含むルート定義 {id} の部分がパラメータ
 // /user/5 のようにアクセスすると、コントローラーの show メソッドに 5 が渡されます。
-Route::get('/user/{id}/{mode}', [UserController::class, 'show']);
+//Route::get('/user/{id}/{mode}', [UserController::class, 'show']);
 // コントローラーのメソッドは public function show($id, $mode) のようになります。
 
 
 // パラメータを任意（省略可能）にする {id?} のように ? を付ける
 // /user/5 や /user のどちらでもアクセスできます。
-Route::get('/optional-user/{id?}', [UserController::class, 'show']); // ルートパスを optional-user に変更して区別
+//Route::get('/optional-user/{id?}', [UserController::class, 'show']); // ルートパスを optional-user に変更して区別
 // コントローラーのメソッドは public function show($id = null) のようになります。
 
 

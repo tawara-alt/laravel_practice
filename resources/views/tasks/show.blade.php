@@ -11,6 +11,10 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-bold mb-4">{{ $task->title }}</h3>
 
+                    <p class="mb-2"><strong>担当者:</strong>
+                        {{ $task->user->name ?? '未設定' }}
+                    </p>
+
                     <p class="mb-2"><strong>対応期限:</strong>
                         <!-- $task->deadline_at に値があるかどうかを判定し、あれば Carbon で整形して表示 -->
                         {{ $task->deadline_at ? \Carbon\Carbon::parse($task->deadline_at)->format('Y-m-d H:i') : '未定' }}
